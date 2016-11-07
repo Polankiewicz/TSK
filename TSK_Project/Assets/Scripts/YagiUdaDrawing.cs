@@ -14,7 +14,7 @@ public class YagiUdaDrawing : MonoBehaviour {
     private int numberOfDirektors;
     private int maxNumberOfDirektors;
 
-    private Stack<Object> DirektorsStack;
+    private Stack<GameObject> DirektorsStack;
 
 
     // Use this for initialization
@@ -28,7 +28,7 @@ public class YagiUdaDrawing : MonoBehaviour {
         maxNumberOfDirektors = 9;
         DirektorPosition = DirektorElement.transform.position;
 
-        DirektorsStack = new Stack<Object>();
+        DirektorsStack = new Stack<GameObject>();
     }
 	
 	// Update is called once per frame
@@ -41,7 +41,8 @@ public class YagiUdaDrawing : MonoBehaviour {
 
                 //new direktor
                 numberOfDirektors++;
-                Object newDirektor = Instantiate(DirektorElement, DirektorPosition + new Vector3(0, 0, 0.5F * numberOfDirektors), Quaternion.identity);
+                GameObject newDirektor = Instantiate(DirektorElement, DirektorPosition + new Vector3(0, 0, 0.5F * numberOfDirektors), Quaternion.identity) as GameObject;
+                newDirektor.transform.localScale = new Vector3(1.5F - 0.1F * numberOfDirektors, 0.2F, 0.2F);
                 DirektorsStack.Push(newDirektor);
             }
         }
