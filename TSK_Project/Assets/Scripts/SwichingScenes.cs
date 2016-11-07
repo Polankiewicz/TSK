@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SwichingScenes : MonoBehaviour {
 
@@ -11,12 +12,12 @@ public class SwichingScenes : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown("1"))
-            Application.LoadLevel("Yagi_Uda");
+            SceneManager.LoadScene("Yagi_Uda");
         if (Input.GetKeyDown("2"))
-            Application.LoadLevel("Monopol");
+            SceneManager.LoadScene("Monopol");
         if (Input.GetKeyDown("3"))
-            Application.LoadLevel("Dipol");
+            SceneManager.LoadScene("Dipol");
         if (Input.GetKeyDown("4"))
-            Application.LoadLevel("Log_Periodic");
+            SceneManager.LoadScene("Log_Periodic");
     }
 }

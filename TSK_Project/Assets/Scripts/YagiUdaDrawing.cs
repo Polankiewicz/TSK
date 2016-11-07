@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class YagiUdaDrawing : MonoBehaviour {
 
     private GameObject DipolElement;
+
     private Vector3 DirektorPosition;
     private GameObject DirektorElement;
     
@@ -15,6 +16,16 @@ public class YagiUdaDrawing : MonoBehaviour {
     private int maxNumberOfDirektors;
 
     private Stack<GameObject> DirektorsStack;
+
+    //////////////////////////////////////////////////////
+
+    private GameObject ReflektorElement;
+    private Vector3 ReflektorPosition;
+
+    private int numberOfReflektors;
+    private int maxNumberOfReflektors;
+
+    private Stack<GameObject> ReflektorsStack;
 
 
     // Use this for initialization
@@ -29,10 +40,21 @@ public class YagiUdaDrawing : MonoBehaviour {
         DirektorPosition = DirektorElement.transform.position;
 
         DirektorsStack = new Stack<GameObject>();
+
+        ///////////////////////////////////////
+
+        ReflektorElement = GameObject.Find("ReflektorElement");
+
+        numberOfReflektors = 0;
+        maxNumberOfReflektors = 4;
+        ReflektorPosition = ReflektorElement.transform.position;
+
+        ReflektorsStack = new Stack<GameObject>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        // DIREKTORS
         if (Input.GetKeyDown("z")) {
             if(numberOfDirektors < maxNumberOfDirektors)  {
                 //resize and move dipol
@@ -60,5 +82,40 @@ public class YagiUdaDrawing : MonoBehaviour {
                 Destroy(DirektorsStack.Pop());
             }
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // REFLEKTORS
+
+        if (Input.GetKeyDown("c"))
+        {
+            if (numberOfReflektors < maxNumberOfReflektors)
+            {
+                //resize and move dipol
+                DipolElement.transform.localScale += vector1;
+                DipolElement.transform.Translate(-vector2);
+
+                //new direktor
+                numberOfReflektors++;
+                GameObject newReflektor = Instantiate(ReflektorElement, ReflektorPosition + new Vector3(0, 0, -0.5F * numberOfReflektors), Quaternion.identity) as GameObject;
+                //newDirektor.transform.localScale = new Vector3(1.5F - 0.1F * numberOfReflektors, 0.2F, 0.2F);
+                ReflektorsStack.Push(newReflektor);
+            }
+        }
+
+        if (Input.GetKeyDown("v"))
+        {
+            if (numberOfReflektors > 0)
+            {
+                //resize and move dipol
+                DipolElement.transform.localScale -= vector1;
+                DipolElement.transform.Translate(vector2);
+
+                //remove direktor
+                numberOfReflektors--;
+                Destroy(ReflektorsStack.Pop());
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
