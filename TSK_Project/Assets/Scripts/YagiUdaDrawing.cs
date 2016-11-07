@@ -5,20 +5,19 @@ using System.Collections.Generic;
 public class YagiUdaDrawing : MonoBehaviour {
 
     private GameObject DipolElement;
-
-    private Vector3 DirektorPosition;
-    private GameObject DirektorElement;
-    
     private Vector3 vector1;
     private Vector3 vector2;
 
+    // direktor
+    private Vector3 DirektorPosition;
+    private GameObject DirektorElement;
+    
     private int numberOfDirektors;
     private int maxNumberOfDirektors;
 
     private Stack<GameObject> DirektorsStack;
 
-    //////////////////////////////////////////////////////
-
+    // reflektor
     private GameObject ReflektorElement;
     private Vector3 ReflektorPosition;
 
@@ -31,18 +30,19 @@ public class YagiUdaDrawing : MonoBehaviour {
     // Use this for initialization
     void Start () {
         DipolElement = GameObject.Find("DipolElement");
-        DirektorElement = GameObject.Find("DirektorElement");
         vector1 = new Vector3(0, 0, 0.48F);
         vector2 = new Vector3(0, 0, 0.24F);
 
+        //direktor
+        DirektorElement = GameObject.Find("DirektorElement");
+        
         numberOfDirektors = 0;
         maxNumberOfDirektors = 9;
         DirektorPosition = DirektorElement.transform.position;
 
         DirektorsStack = new Stack<GameObject>();
 
-        ///////////////////////////////////////
-
+        // reflektor
         ReflektorElement = GameObject.Find("ReflektorElement");
 
         numberOfReflektors = 0;
@@ -83,9 +83,7 @@ public class YagiUdaDrawing : MonoBehaviour {
             }
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // REFLEKTORS
-
         if (Input.GetKeyDown("c"))
         {
             if (numberOfReflektors < maxNumberOfReflektors)
@@ -94,10 +92,10 @@ public class YagiUdaDrawing : MonoBehaviour {
                 DipolElement.transform.localScale += vector1;
                 DipolElement.transform.Translate(-vector2);
 
-                //new direktor
+                //new reflector
                 numberOfReflektors++;
                 GameObject newReflektor = Instantiate(ReflektorElement, ReflektorPosition + new Vector3(0, 0, -0.5F * numberOfReflektors), Quaternion.identity) as GameObject;
-                //newDirektor.transform.localScale = new Vector3(1.5F - 0.1F * numberOfReflektors, 0.2F, 0.2F);
+                //newReflektor.transform.localScale = new Vector3(1.5F - 0.1F * numberOfReflektors, 0.2F, 0.2F);
                 ReflektorsStack.Push(newReflektor);
             }
         }
@@ -110,12 +108,10 @@ public class YagiUdaDrawing : MonoBehaviour {
                 DipolElement.transform.localScale -= vector1;
                 DipolElement.transform.Translate(vector2);
 
-                //remove direktor
+                //remove reflector
                 numberOfReflektors--;
                 Destroy(ReflektorsStack.Pop());
             }
         }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
